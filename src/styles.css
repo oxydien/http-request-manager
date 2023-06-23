@@ -1,0 +1,403 @@
+/* Apologies for the untidy CSS; time constraints prevented refinement */
+section {
+  background-color: var(--fg-h);
+  border-radius: 0 0 var(--brr) var(--brr);
+}
+
+.bar {
+  padding: 0.7rem;
+  padding-bottom: 0.2rem;
+  height: 30px;
+
+  text-align: left;
+  font-weight: 800;
+  font-size: 1.1rem;
+  user-select: none;
+}
+
+.get-bar {
+  background-color: var(--get);
+
+  border-bottom: 1px solid var(--get-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.post-bar {
+  background-color: var(--post);
+
+  border-bottom: 1px solid var(--post-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.patch-bar {
+  background-color: var(--patch);
+
+  border-bottom: 1px solid var(--patch-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.put-bar {
+  background-color: var(--put);
+
+  border-bottom: 1px solid var(--put-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.del-bar {
+  background-color: var(--del);
+
+  border-bottom: 1px solid var(--del-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.trace-bar {
+  background-color: var(--trace);
+
+  border-bottom: 1px solid var(--trace-m);
+  text-shadow: 0 0 8px black;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.settings-bar {
+  background-color: var(--main);
+
+  border-bottom: 1px solid var(--main-m);
+  text-shadow: 0 0 8px black;
+
+  padding-left: 40px;
+
+  position: sticky;
+  top: 0px;
+  z-index: 3000;
+}
+
+.mid-bar {
+  --_background: #1e1e1e;
+  padding: 0.5rem;
+  padding-bottom: 0;
+  background-color: var(--_background);
+  border-bottom: 1px solid var(--main-m);
+
+  text-align: left;
+  font-weight: 700;
+  font-size: 1.05rem;
+  user-select: none;
+
+  position: sticky;
+  top: 45px;
+  z-index: 2500;
+}
+
+.sub-bar .flex,
+.mid-bar .flex,
+.bar .flex {
+  cursor: pointer;
+}
+
+.flex svg {
+  transition: all 150ms;
+  transform: rotate(-90deg);
+}
+
+.sub-bar {
+  padding: 0.3rem;
+  padding-bottom: 0;
+
+  height: 27px;
+
+  text-align: left;
+  font-weight: 600;
+  font-size: 1rem;
+  user-select: none;
+
+  top: 45px;
+  z-index: 1000;
+}
+
+.get-sub-bar {
+  background-color: var(--get-m);
+
+  border-bottom: 1px solid var(--main-m);
+
+  position: sticky;
+}
+
+.post-sub-bar {
+  background-color: var(--post-m);
+
+  border-bottom: 1px solid var(--main-m);
+
+  position: sticky;
+}
+
+.patch-sub-bar {
+  background-color: var(--patch-m);
+
+  border-bottom: 1px solid var(--patch-m);
+
+  position: sticky;
+}
+
+.put-sub-bar {
+  background-color: var(--put-m);
+
+  border-bottom: 1px solid var(--put-m);
+
+  position: sticky;
+}
+
+.del-sub-bar {
+  background-color: var(--del-m);
+
+  border-bottom: 1px solid var(--del-m);
+
+  position: sticky;
+}
+
+.trace-sub-bar {
+  background-color: var(--trace-m);
+
+  border-bottom: 1px solid var(--trace-m);
+
+  position: sticky;
+}
+
+.settings-sub-bar {
+  background-color: var(--main-m);
+
+  padding: 0.4rem;
+  border-bottom: 1px solid var(--bg);
+
+  position: sticky;
+}
+
+.sub-mid-bar {
+  top: 83px;
+}
+
+.flex {
+  display: inline-flex;
+}
+
+svg.open {
+  transform: rotate(0deg);
+}
+
+.ping {
+  display: block;
+  float: right;
+  font-weight: 300;
+  background-color: #fafafa2f;
+  border-radius: 3px;
+  padding: 2px;
+  box-sizing: border-box;
+}
+
+.url-input {
+  margin: 0 10px 10px;
+  width: 100%;
+}
+
+.request-form {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.request-form span {
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.request-form .input {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.request-form .input .label {
+  padding: 0.3rem;
+  min-width: 300px;
+  text-align: left;
+}
+
+.request-form .input input {
+  width: 70%;
+}
+
+.headers-input {
+  display: flex;
+  padding: 10px;
+  gap: 5px;
+}
+
+.header-values,
+.header-clear,
+.header-names {
+  box-sizing: border-box;
+  display: flex;
+  flex-basis: 3000px;
+  gap: 5px;
+  flex-direction: column;
+}
+.header-clear {
+  max-width: 50px;
+}
+.header-names {
+  max-width: 300px;
+}
+.header-names input {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.add-header {
+  width: calc(100% - 20px);
+  margin: 0 10px 10px;
+}
+
+.request-body {
+  margin: 10px 10px 0;
+  width: calc(100% - 60px);
+  height: 300px;
+}
+
+.submit-request {
+  margin: 0 10px;
+}
+
+.response-preview iframe {
+  min-height: 600px;
+  width: 100%;
+}
+
+.response-headers {
+  list-style: none;
+  text-align: left;
+}
+
+.response-headers span {
+  display: inline-block;
+  font-weight: 600;
+  min-width: 120px;
+}
+
+.response-body {
+  width: calc(100% - 40px);
+  margin: auto;
+  min-height: 600px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  color: #ffffff;
+  background-color: #0f0f0f98;
+}
+
+textarea,
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #ffffff;
+  background-color: #0f0f0f98;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+  background-repeat: no-repeat !important;
+}
+
+button {
+  cursor: pointer;
+  --_shadow: black;
+  --_background: #0f0f0f98;
+  background: var(--_background);
+  text-shadow: 0 0 8px black;
+  font-weight: 600;
+}
+
+button:disabled {
+  filter: saturate(30%);
+}
+
+button:hover {
+  border-color: #396cd8;
+  filter: drop-shadow(0 0 3px var(--_shadow));
+}
+button:active {
+  border-color: #396cd8;
+  background-color: #0f0f0f69;
+}
+
+textarea,
+input,
+button {
+  outline: none;
+}
+
+.top-submit {
+  padding: 0;
+  margin-top: -2px;
+  border-radius: 50%;
+  width: 25px;
+  height: 25px;
+}
+
+.top-request-num {
+  padding: 0;
+  border-radius: 5px;
+  margin-top: -2px;
+  width: 60px;
+  height: 25px;
+  margin-right: 5px;
+  box-sizing: border-box;
+}
+
+.top-submit svg {
+  transform: none !important;
+}
+
+.settings-top-save {
+  padding: 0;
+  border-radius: 5px;
+  margin-top: -2px;
+  height: 25px;
+  margin-right: 5px;
+  box-sizing: border-box;
+  transition: none;
+}
+.settings-top-save:disabled {
+  color: red;
+}
+
+.settings-top-save span {
+  margin-top: 2px;
+}
