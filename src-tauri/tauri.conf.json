@@ -2,13 +2,13 @@
   "build": {
     "beforeDevCommand": "npm run dev",
     "beforeBuildCommand": "npm run build",
-    "devPath": "http://localhost:1420",
+    "devPath": "http://localhost:15523",
     "distDir": "../dist",
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "request-manager",
-    "version": "0.0.0"
+    "productName": "oxy-req-mng",
+    "version": "1.1.0"
   },
   "tauri": {
     "allowlist": {
@@ -21,11 +21,12 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "eu.oldisek",
+      "identifier": "oxy-req-mng",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",
         "icons/128x128@2x.png",
+        "icons/icon.icns",
         "icons/icon.ico"
       ]
     },
@@ -36,12 +37,9 @@
       {
         "fullscreen": false,
         "resizable": true,
-        "title": "Request Manager",
-        "minWidth":700,
-        "width": 1200,
-        "minHeight":300,
-        "height": 600,
-        "titleBarStyle": "Overlay"
+        "title": "RequestManager",
+        "width": 1000,
+        "height": 720
       }
     ]
   }

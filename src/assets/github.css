@@ -57,6 +57,7 @@ code.hljs {
 .hljs-name,
 .hljs-deletion {
   color: #72f088;
+  font-weight: normal;
 }
 
 /* base09 - Integers, Boolean, Constants, XML Attributes, Markup Link Url */
@@ -81,7 +82,6 @@ code.hljs {
 }
 
 .hljs-strong {
-  font-weight:bold;
   color: #f7ca88;
 }
 
@@ -109,6 +109,7 @@ code.hljs {
 .hljs-title.function_,
 .hljs-section {
   color: #dbb7ff;
+  font-weight: normal;
 }
 
 /* base0E - Keywords, Storage, Selector, Markup Italic, Diff Changed */
@@ -132,5 +133,4 @@ code.hljs {
 .hljs-meta .hljs-keyword,
 /* for v10 compatible themes */
 .hljs-meta-keyword {
-  font-weight: bold;
 }

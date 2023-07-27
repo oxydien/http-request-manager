@@ -1,7 +1,7 @@
 import { createApp } from "vue";
-import VueHead from "vue-head";
-import "./base.css";
-import "./styles.css";
+import {router} from "./router/index";
+import "omorphia/dist/style.css";
+import "./assets/style.css"
 import "./assets/github.css";
 import App from "./App.vue";
 import hljs from "highlight.js/lib/core";
@@ -18,4 +18,7 @@ hljs.registerLanguage("xml", xml);
 hljs.registerLanguage("javascript", js);
 hljs.registerLanguage("css", css);
 
-createApp(App).use(hljsVuePlugin).use(VueHead).mount("#app");
+const app = createApp(App)
+app.use(router);
+app.use(hljsVuePlugin)
+app.mount("#app");
