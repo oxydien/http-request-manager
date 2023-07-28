@@ -35,8 +35,6 @@ pub async fn make_http_request(
     data: Option<&str>,
     headers: Option<Vec<(&str, &str)>>,
 ) -> Result<String, String> {
-    print!("Sending {} request", method);
-
     let client = reqwest::Client::new();
     let mut request_builder = match method {
         "GET" => client.get(url),
