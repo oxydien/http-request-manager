@@ -5,7 +5,7 @@ use std::path::PathBuf;
 
 fn get_default_config() -> Value {
     json!({
-        "version": "1.1.0",
+        "version": "1.1.1",
         "defaults": {
             "queries": [],
             "headers": [

@@ -1,6 +1,6 @@
 [package]
 name = "oxy-req-mng"
-version = "1.1.0"
+version = "1.1.1"
 description = "A simple app for creating requests"
 authors = ["oxydien"]
 license = "BSD 3-Clause"
