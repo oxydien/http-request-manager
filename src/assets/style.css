@@ -91,3 +91,7 @@ html {
 a {
   color: var(--color-green);
 }
+
+#HTTP_METHOD_DROPDOWN .selected {
+  height: 40px;
+}

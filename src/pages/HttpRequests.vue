@@ -9,6 +9,11 @@
   background-color: var(--color-button-bg);
   color: var(--dark-color-contrast);
   cursor: pointer;
+  h3 {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
 }
 
 .big-bar {
@@ -22,25 +27,31 @@
 .normal-bar {
   z-index: 4;
   top: 45px;
-  height: 30px;
+  height: 35px;
   border-bottom: 1px solid var(--color-raised-bg);
   padding-left: calc(var(--gap-sm) * 1.5);
 
+  h4 {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
   .time {
     position: absolute;
     right: 10px;
   }
 
   .url {
-    display: inline-block;
+    display: block;
     font-weight: 300;
     color: var(--dark-color-base);
     background-color: #00000077;
     padding: 2px;
     border-radius: 5px;
-    &:active {
-      transform: scale(0.9);
-    }
+    max-width: 80%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 }
 
@@ -49,6 +60,7 @@
   top: 75px;
   height: 28px;
   padding-left: calc(var(--gap-sm) * 2);
+  border-bottom: 1px solid var(--color-raised-bg);
 }
 
 .small-bar {
@@ -62,14 +74,19 @@
   top: 100px;
   height: 25px;
   padding-left: calc(var(--gap-sm) * 3);
+  border-bottom: 1px solid var(--color-raised-bg);
 }
 
-.url-holder {
+.url-holder:not(:empty) {
   font-weight: 300;
   color: var(--dark-color-base);
   background-color: #00000077;
   padding: 2px;
   border-radius: 5px;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .url-input {
@@ -161,6 +178,7 @@
         <div class="url-input">
           <DropdownSelect
             name="selectMethod"
+            id="HTTP_METHOD_DROPDOWN"
             style="max-width: 13ch; height: 40px"
             :options="[
               'GET',
@@ -168,6 +186,7 @@
               'OPTIONS',
               'POST',
               'PUT',
+              'PATCH',
               'DELETE',
               'TRACE',
             ]"
@@ -179,6 +198,13 @@
             v-model="request.url"
             @keydown.enter="sendRequest"
           />
+          <Button
+            iconOnly
+            style="width: 50px; height: 40px"
+            title="Clear request form"
+            @click="clearRequestForm"
+            ><TrashIcon
+          /></Button>
         </div>
         <section>
           <div
@@ -206,7 +232,11 @@
                 type="text"
                 placeholder="Query Value..."
               />
-              <Button @click="deleteQuery(index)" iconOnly>
+              <Button
+                @click="deleteQuery(index)"
+                iconOnly
+                style="height: 40px; width: 40px"
+              >
                 <TrashIcon />
               </Button>
             </div>
@@ -241,7 +271,11 @@
                 type="text"
                 placeholder="Header Value..."
               />
-              <Button @click="deleteHeader(index)" iconOnly>
+              <Button
+                @click="deleteHeader(index)"
+                iconOnly
+                style="height: 40px; width: 40px"
+              >
                 <TrashIcon />
               </Button>
             </div>
@@ -273,13 +307,14 @@
         <Button
           @click="sendRequest"
           color="secondary"
-          :disabled="this.generateURL == ''"
+          :disabled="this.generateURL == '' || requestInProgress"
           class="send-button"
         >
           <SendIcon />Send Request
         </Button>
       </div>
     </section>
+    <!-- ################################### Responses ################################### -->
     <section>
       <div class="bar big-bar" @click="show.Responses = !show.Responses">
         <OpenArrowIcon :open="show.Responses" />
@@ -298,9 +333,7 @@
             <OpenArrowIcon :open="show.Response[index].open" />
             <h4>
               {{ item.request.method }} - Request
-              <span @click="copyRequest(index)" class="url">
-                <ClipboardCopyIcon />{{ item.request.url }}</span
-              >
+              <span class="url"> {{ item.request.url }}</span>
               |
               {{
                 item.response.status_code == -1
@@ -313,51 +346,72 @@
             </h4>
           </div>
           <div v-if="show.Response[index].open">
-            <div v-if="item.request.headers.length > 0">
+            <div>
               <div
-                class="bar mid-bar"
+                class="mid-bar bar"
                 @click="
-                  show.Response[index].request.headers =
-                    !show.Response[index].request.headers
+                  show.Response[index].request.all =
+                    !show.Response[index].request.all
                 "
               >
-                <OpenArrowIcon :open="show.Response[index].request.headers" />
-                <h4>Request headers</h4>
+                <OpenArrowIcon :open="show.Response[index].request.all" />
+                <h4>Request Info</h4>
               </div>
-              <div
-                v-if="show.Response[index].request.headers"
-                class="section req-headers"
-              >
-                <ul class="view-headers">
-                  <li
-                    v-for="(header, index) in item.request.headers"
-                    :key="index"
+              <div v-if="show.Response[index].request.all">
+                <HttpRequestInfo
+                  :index="index"
+                  :item="item"
+                  @copyRequest="copyRequest"
+                />
+                <div v-if="item.request.headers.length > 0">
+                  <div
+                    class="bar tiny-bar"
+                    @click="
+                      show.Response[index].request.headers =
+                        !show.Response[index].request.headers
+                    "
                   >
-                    <span
-                      :style="`color:var(--status-${item.response.status_code}-color)`"
-                      >{{ header.name }}:</span
-                    >
-                    {{ header.value }}
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div v-if="item.request.body">
-              <div
-                class="bar mid-bar"
-                @click="
-                  show.Response[index].request.body =
-                    !show.Response[index].request.body
-                "
-              >
-                <OpenArrowIcon :open="show.Response[index].request.body" />
-                <h4>Request body</h4>
-              </div>
-              <div
-                v-if="show.Response[index].request.body"
-                class="section body"
-              >
-                {{ item.request.body }}
+                    <OpenArrowIcon
+                      :open="show.Response[index].request.headers"
+                    />
+                    <h5>Request headers</h5>
+                  </div>
+                  <div
+                    v-if="show.Response[index].request.headers"
+                    class="section req-headers"
+                  >
+                    <ul class="view-headers">
+                      <li
+                        v-for="(header, index) in item.request.headers"
+                        :key="index"
+                      >
+                        <span
+                          :style="`color:var(--status-${item.response.status_code}-color)`"
+                          >{{ header.name }}:</span
+                        >
+                        {{ header.value }}
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div v-if="item.request.body">
+                  <div
+                    class="bar tiny-bar"
+                    @click="
+                      show.Response[index].request.body =
+                        !show.Response[index].request.body
+                    "
+                  >
+                    <OpenArrowIcon :open="show.Response[index].request.body" />
+                    <h4>Request body</h4>
+                  </div>
+                  <div
+                    v-if="show.Response[index].request.body"
+                    class="section body"
+                  >
+                    {{ item.request.body }}
+                  </div>
+                </div>
               </div>
             </div>
             <div>
@@ -531,6 +585,7 @@ import {
 import { invoke } from "@tauri-apps/api/tauri";
 import OpenArrowIcon from "../components/icons/OpenArrowIcon.vue";
 import JsonHighlight from "../components/JsonHighlight.vue";
+import HttpRequestInfo from "../components/HttpRequestInfo.vue";
 export default {
   components: {
     OpenArrowIcon,
@@ -542,6 +597,7 @@ export default {
     ClipboardCopyIcon,
     Chips,
     JsonHighlight,
+    HttpRequestInfo,
   },
   data() {
     return {
@@ -562,6 +618,7 @@ export default {
       },
       responses: [],
       config: {},
+      requestInProgress: false,
     };
   },
   mounted() {
@@ -605,9 +662,11 @@ export default {
           response: { all: true, headers: false, body: true, bodyType: "raw" },
         });
         console.log("Sending request", request);
+        this.requestInProgress = true;
         try {
           let response = await invoke("send_request", request);
           console.log("response", response);
+          this.responses[0] = response;
           this.loadHistory().then(() => {
             this.show.Response[0].open = true;
           });
@@ -618,6 +677,7 @@ export default {
             time: -1,
           };
         } finally {
+          this.requestInProgress = false;
           if (this.show.Response[1]) {
             this.show.Response[1].open = false;
           }
@@ -663,7 +723,7 @@ export default {
       history.forEach(() => {
         this.show.Response.unshift({
           open: false,
-          request: { all: false, headers: false, body: true },
+          request: { all: true, headers: false, body: false },
           response: { all: true, headers: false, body: true, bodyType: "raw" },
         });
       });
@@ -682,11 +742,18 @@ export default {
       this.request.body = requestInfo.data;
       if (requestInfo.url.includes("?")) {
         this.request.url = requestInfo.url.split("?")[0];
+        this.request.queries = this.parseQueries(requestInfo.url);
       } else {
+        this.request.queries = [];
         this.request.url = requestInfo.url;
       }
       this.method = requestInfo.method;
-      this.show.Response[index].open = !this.show.Response[index].open;
+    },
+    clearRequestForm() {
+      this.request.headers = [];
+      this.request.body = "";
+      this.request.url = "";
+      this.loadConfig();
     },
     prettifyJson(data) {
       try {
@@ -702,6 +769,25 @@ export default {
       }).then((highlighter) => {
         return highlighter.codeToHtml(code, { lang: lang });
       });
+    },
+    parseQueries(url) {
+      const queryIndex = url.indexOf("?");
+      if (queryIndex === -1) {
+        return [];
+      }
+
+      const queryString = url.slice(queryIndex + 1);
+      const queryPairs = queryString.split("&");
+      const queries = [];
+
+      queryPairs.forEach((pair) => {
+        const [name, value] = pair.split("=");
+        const decodedName = decodeURIComponent(name);
+        const decodedValue = decodeURIComponent(value);
+        queries.push({ name: decodedName, value: decodedValue });
+      });
+
+      return queries;
     },
     async loadConfig() {
       let config = await invoke("get_config_values");

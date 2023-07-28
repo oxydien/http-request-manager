@@ -18,7 +18,7 @@ Introducing the new and improved Http Request Manager! This revamped version com
 
 ![image](https://imgur.com/ONj4MPs.png)
 
-3. **Support for All HTTP Methods:** Whether it's a GET, POST, PUT, PATCH, DELETE, or any other HTTP method, Http Request Manager has got you covered. (all that are on image)
+3. **Support for All HTTP Methods:** Whether it's a GET, POST, PUT, PATCH, DELETE, or any other HTTP method, Http Request Manager has got you covered. (all that are on image + PATCH)
 
 ![image](https://imgur.com/ls4mACl.png)
 

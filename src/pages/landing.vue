@@ -11,7 +11,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  width: 80%;
+  width: 60%;
   background-color: var(--color-super-raised-bg);
   padding: var(--gap-sm);
   border-radius: var(--radius-sm);
@@ -29,16 +29,20 @@
 [id~="e"] {
   text-decoration: none;
 }
-.some-text {
+.changelog-box {
   display: block;
   position: relative;
-  width: fit-content;
+  width: 605px;
   left: 50%;
   transform: translateX(-50%);
   margin: 30px 0;
   padding: 10px;
   text-align: center;
-  border: 1px solid white;
+  border: 1px solid var(--dark-color-base);
+  &.major {
+    border: 1px solid var(--dark-color-contrast);
+    color: var(--dark-color-contrast);
+  }
   border-radius: 15px;
   span {
     position: absolute;
@@ -54,21 +58,40 @@
 <template>
   <div id="landingPage">
     <Logo style="margin-top: 50px" />
-    <p class="some-text">
-      <span>1.1.0</span>
-      I completly rewrote this app in just 24 hours, and it's surprisingly
-      functional!<br />
-      If you'd like to add features, contribute it
-      <a href="https://github.com/oxydien/http-request-manager">on GitHub</a
-      >.<br />
-      Your contributions are most welcome as we continue to enhance this
-      project.
-    </p>
+
     <div class="flex-grid">
       <Button class="create-request" link="/http/">
         <ReqTypeIcon t="http" /> Create http request</Button
       >
     </div>
+    <h3 style="text-align: center">Changelog</h3>
+    <p class="changelog-box">
+      <span>1.1.1</span>
+      Some bug fixes, QOL enhancements and better request info...<br />
+      See full changelog on github at
+      <a
+        href="https://github.com/oxydien/http-request-manager/releases"
+        target="_blank"
+        >releases</a
+      >
+    </p>
+    <p class="changelog-box major">
+      <span>1.1.0 - major version</span>
+      I completely rewrote this app in just 24 hours, and it's surprisingly
+      functional!<br />
+      See full changelog at
+      <a
+        href="https://github.com/oxydien/http-request-manager/releases"
+        target="_blank"
+        >releases</a
+      ><br />
+      If you'd like to add features, contribute it
+      <a href="https://github.com/oxydien/http-request-manager" target="_blank"
+        >on GitHub</a
+      >.<br />
+      Your contributions are most welcome as we continue to enhance this
+      project.
+    </p>
     <div class="e">
       &#77;&#97;&#100;&#101;&#32;&#98;&#121;&#32;
       <a id="e">&#111;&#120;&#121;&#100;&#105;&#101;&#110;</a>

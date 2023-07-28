@@ -7,7 +7,7 @@
     "withGlobalTauri": false
   },
   "package": {
-    "productName": "oxy-req-mng",
+    "productName": "Request manager",
     "version": "1.1.0"
   },
   "tauri": {
@@ -16,6 +16,12 @@
       "shell": {
         "all": false,
         "open": true
+      },
+      "os": {
+        "all": true
+      },
+      "app": {
+        "all": true
       }
     },
     "bundle": {
@@ -39,7 +45,9 @@
         "resizable": true,
         "title": "RequestManager",
         "width": 1000,
-        "height": 720
+        "height": 520,
+        "minWidth": 800,
+        "minHeight": 350
       }
     ]
   }
