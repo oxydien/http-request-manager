@@ -1,6 +1,13 @@
-# Request Manager (rewrite)
+# MOVED
+this repository is no longer used
 
-![image](https://imgur.com/ZkLMZqm.png)
+go to [requester](https://github.com/oxydien/requester)
+
+
+<hr>
+Request Manager (rewrite)
+
+[logo](https://imgur.com/ZkLMZqm.png)
 
 A simple application for testing APIs and making HTTP requests. Built on Tauri and Vue.
 
